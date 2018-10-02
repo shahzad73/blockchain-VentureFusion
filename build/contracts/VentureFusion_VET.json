@@ -1,0 +1,446 @@
+{
+  "contractName": "VentureFusion_VET",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_vetTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stackVETTokens",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_vetTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unStackVETTokens",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5060bc8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063918db79e14604e578063c725a37a14606c575b600080fd5b606a60048036038101908080359060200190929190505050608a565b005b608860048036038101908080359060200190929190505050608d565b005b50565b505600a165627a7a7230582088162a0316f4ceb353550db6d6f53dbe4ed26677ffbd1940a91fff3bfe4e7b570029",
+  "deployedBytecode": "0x6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063918db79e14604e578063c725a37a14606c575b600080fd5b606a60048036038101908080359060200190929190505050608a565b005b608860048036038101908080359060200190929190505050608d565b005b50565b505600a165627a7a7230582088162a0316f4ceb353550db6d6f53dbe4ed26677ffbd1940a91fff3bfe4e7b570029",
+  "sourceMap": "28:838:4:-;;;61:30;8:9:-1;5:2;;;30:1;27;20:12;5:2;61:30:4;28:838;;;;;;",
+  "deployedSourceMap": "28:838:4:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;698:71;;;;;;;;;;;;;;;;;;;;;;;;;;784:73;;;;;;;;;;;;;;;;;;;;;;;;;;698:71;;:::o;784:73::-;;:::o",
+  "source": "pragma solidity ^0.4.24;\r\n\r\ncontract VentureFusion_VET {\r\n\r\n\tconstructor() public {\r\n\t\t\r\n\t}\r\n\r\n\r\n\r\n\t//TODO    override token transfers so before token trnasfers check stacked tokens\r\n\r\n\t  \r\n\r\n\r\n\t// -----------------------------------------\r\n\t// VET Token Stacking / UnStacking\r\n\t// Called by owner of the tokens to stack some amount VET token against a specific skill set. Stack tokens \r\n\t// will be locked and will not be used for any transactions. \r\n\t//\r\n\t// Stocked tokens will also be tracked within this contract. It will track how many token are stacked against a \r\n\t//specific project or how many tokens are stacked against a specific skill \r\n\t// -----------------------------------------\r\n\tfunction stackVETTokens(uint256 _vetTokenAmount) public payable {\r\n\r\n\t}  \r\n\t  \r\n\t  \r\n\tfunction unStackVETTokens(uint256 _vetTokenAmount) public payable {\r\n\r\n\t}\r\n\r\n\r\n\r\n}",
+  "sourcePath": "F:\\Projects\\work\\VF\\blockchain\\contracts\\VentureFusion_VET.sol",
+  "ast": {
+    "absolutePath": "/F/Projects/work/VF/blockchain/contracts/VentureFusion_VET.sol",
+    "exportedSymbols": {
+      "VentureFusion_VET": [
+        370
+      ]
+    },
+    "id": 371,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 353,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:4"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 370,
+        "linearizedBaseContracts": [
+          370
+        ],
+        "name": "VentureFusion_VET",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 356,
+              "nodeType": "Block",
+              "src": "82:9:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 357,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 354,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "72:2:4"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 355,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "82:0:4"
+            },
+            "scope": 370,
+            "src": "61:30:4",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 362,
+              "nodeType": "Block",
+              "src": "762:7:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 363,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "stackVETTokens",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 360,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 359,
+                  "name": "_vetTokenAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 363,
+                  "src": "722:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 358,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "722:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "721:25:4"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 361,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "762:0:4"
+            },
+            "scope": 370,
+            "src": "698:71:4",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 368,
+              "nodeType": "Block",
+              "src": "850:7:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 369,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "unStackVETTokens",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 366,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 365,
+                  "name": "_vetTokenAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 369,
+                  "src": "810:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 364,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "810:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "809:25:4"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 367,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "850:0:4"
+            },
+            "scope": 370,
+            "src": "784:73:4",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 371,
+        "src": "28:838:4"
+      }
+    ],
+    "src": "0:866:4"
+  },
+  "legacyAST": {
+    "absolutePath": "/F/Projects/work/VF/blockchain/contracts/VentureFusion_VET.sol",
+    "exportedSymbols": {
+      "VentureFusion_VET": [
+        370
+      ]
+    },
+    "id": 371,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 353,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:4"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 370,
+        "linearizedBaseContracts": [
+          370
+        ],
+        "name": "VentureFusion_VET",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 356,
+              "nodeType": "Block",
+              "src": "82:9:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 357,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 354,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "72:2:4"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 355,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "82:0:4"
+            },
+            "scope": 370,
+            "src": "61:30:4",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 362,
+              "nodeType": "Block",
+              "src": "762:7:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 363,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "stackVETTokens",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 360,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 359,
+                  "name": "_vetTokenAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 363,
+                  "src": "722:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 358,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "722:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "721:25:4"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 361,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "762:0:4"
+            },
+            "scope": 370,
+            "src": "698:71:4",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 368,
+              "nodeType": "Block",
+              "src": "850:7:4",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 369,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "unStackVETTokens",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 366,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 365,
+                  "name": "_vetTokenAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 369,
+                  "src": "810:23:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 364,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "810:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "809:25:4"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 367,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "850:0:4"
+            },
+            "scope": 370,
+            "src": "784:73:4",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 371,
+        "src": "28:838:4"
+      }
+    ],
+    "src": "0:866:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-10-02T13:27:06.982Z"
+}
