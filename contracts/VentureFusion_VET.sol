@@ -1,22 +1,26 @@
 pragma solidity ^0.4.24;
 
-import './ERC20/MintableToken.sol';
+import './contracts/token/ERC20/MintableToken.sol';
 
 
 contract VentureFusion_VET is MintableToken {
 
-    string public name = "Venture Fusion VET Token";
-    string public symbol = "VFVT";
-    uint8 public decimals = 18;
+    //string public name = "Venture Fusion VET Token";
+    //string public symbol = "VFVT";
+    //uint8 public decimals = 18;
 
+	string public name;
+	string public symbol;
+	uint8 public decimals;
 
-	constructor() public {
-		
+	constructor(string _name, string _symbol, uint8 _decimals) public {
+		name = _name;
+		symbol = _symbol;
+		decimals = _decimals;
 	}
 
 
 	//TODO    override token transfers so before token trnasfers check stacked tokens
-
 
 	// -----------------------------------------
 	// VET Token Stacking / UnStacking
@@ -26,14 +30,14 @@ contract VentureFusion_VET is MintableToken {
 	// Stocked tokens will also be tracked within this contract. It will track how many token are stacked against a 
 	//specific project or how many tokens are stacked against a specific skill 
 	// -----------------------------------------
-	function stackVETTokens(uint256 _vetTokenAmount) public payable {
+	//function stackVETTokens(uint256 _vetTokenAmount) public payable {
 
-	}  
+	//}  
 	  
 	  
-	function unStackVETTokens(uint256 _vetTokenAmount) public payable {
+	//function unStackVETTokens(uint256 _vetTokenAmount) public payable {
 
-	}
+	//}
 
 
 
