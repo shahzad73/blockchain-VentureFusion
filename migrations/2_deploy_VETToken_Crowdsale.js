@@ -22,7 +22,10 @@ module.exports = function(deployer, network, accounts) {
                 wallet,
                 VentureFusion_VET.address
             );
-  });  
+  }).then(() => {
+		var token = VentureFusion_VET.at(VentureFusion_VET.address);
+		token.transferOwnership(VentureFusionVET_Crowdsale.address)
+  })
   
 
 };
