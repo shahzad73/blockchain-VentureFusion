@@ -4,7 +4,7 @@ pragma solidity ^0.4.24;
 import "./contracts/crowdsale/emission/MintedCrowdsale.sol";
 
 
-contract VentureFusionVET_Crowdsale is MintedCrowdsale, Ownable {
+contract VETToken_Crowdsale is MintedCrowdsale, Ownable {
 
     constructor (
             uint256 _rate,

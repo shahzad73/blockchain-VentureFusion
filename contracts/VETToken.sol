@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 import './contracts/token/ERC20/MintableToken.sol';
 
 
-contract VentureFusion_VET is MintableToken {
+contract VETToken is MintableToken {
 
     //string public name = "Venture Fusion VET Token";
     //string public symbol = "VFVT";
@@ -33,7 +33,7 @@ contract VentureFusion_VET is MintableToken {
 	//function stackVETTokens(uint256 _vetTokenAmount) public payable {
 
 	//}  
-	  
+
 	  
 	//function unStackVETTokens(uint256 _vetTokenAmount) public payable {
 
