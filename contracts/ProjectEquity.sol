@@ -2,15 +2,23 @@ pragma solidity ^0.4.24;
 
 import "./contracts/venturefusion/ProjectInterface.sol";
 import "./contracts/math/SafeMath.sol";
+import './contracts/ownership/Ownable.sol';
 
-contract ProjectEquity is ProjectInterface {
-
-  mapping (address => mapping (address => uint256)) internal shareAllowed;
-
-  using SafeMath for uint256;
+contract ProjectEquity is ProjectInterface, Ownable {
 
   mapping(address => uint256) internal shareBalances;
   
+  mapping (address => mapping (address => uint256)) internal shareAllowed;
+
+  using SafeMath for uint256;
+  
+  
+  constructor(uint _PercentEquityOfIncubatorOwner) public {
+	 uint totalPercent = 100;
+	 shareBalances[msg.sender] = _PercentEquityOfIncubatorOwner;
+	 shareBalances[0x0] = totalPercent.sub(_PercentEquityOfIncubatorOwner);
+  }
+
   
 
   /**

@@ -1,12 +1,13 @@
 pragma solidity ^0.4.24;
 
 import './contracts/ownership/Ownable.sol';
+import './ProjectEquity.sol';
 
 contract Incubator is Ownable {
 	
-	uint public ventureFusionPercentageInProject;
+	uint public incubatorOwnerPercentageInProject;
 	uint public transactionPriceInTokens;
-	
+
 	
 	uint public numberOfProjectsInThisIncubator = 0;   //current number of project in this incubator
 	struct projectsStruct {             //project structure
@@ -16,9 +17,12 @@ contract Incubator is Ownable {
 	mapping (uint => projectsStruct) public incubatorProjects;     //mapping of projects
 	
 	
+	event ProjectCreatedEvent(string projectName, uint ProjectNo);
+	
 	
 	constructor(uint _projectPercentage, uint _transactionPriceInTokens) public {
-		
+		incubatorOwnerPercentageInProject = _projectPercentage;
+		transactionPriceInTokens = _transactionPriceInTokens;
 	}
 	
 	
@@ -26,7 +30,7 @@ contract Incubator is Ownable {
 	// Change the percentages owned by VentureFusion when creating a new project  
 	//-------------------------------------------------
 	function changeProjectPercentage(uint _projectPercentage) public onlyOwner {	
-		ventureFusionPercentageInProject = _projectPercentage;
+		incubatorOwnerPercentageInProject = _projectPercentage;
 	}
 	
 	
@@ -38,27 +42,33 @@ contract Incubator is Ownable {
 		transactionPriceInTokens = _transactionPriceInTokens;
 	}
 
+
 	
+
+	projectsStruct newProject;
 	//-------------------------------------------------
 	// Add new project.   This will create a new project within this incubator
 	//-------------------------------------------------
 	function addNewProject(string _projectName) 
 		public onlyOwner 
-		returns ( uint newProjectID, address projectAddress )  
+		returns ( uint newProjectID, address projectAddress, string projectName )  
 	{
-		projectsStruct storage newProject;
-		newProject.projectName = _projectName;
-		newProject.projectContractAddress = 0x0;
+		address newProjectContract = new ProjectEquity(incubatorOwnerPercentageInProject);
+
+		newProject = projectsStruct(_projectName, newProjectContract);
 		incubatorProjects[numberOfProjectsInThisIncubator] = newProject;
 
 		//set return values 
 		newProjectID = numberOfProjectsInThisIncubator;
 		projectAddress = newProject.projectContractAddress;
-
+		projectName = _projectName;
+		
+		emit ProjectCreatedEvent(_projectName, numberOfProjectsInThisIncubator);
+		
 		//increment the counter for next new project
-		numberOfProjectsInThisIncubator = numberOfProjectsInThisIncubator + 1;		
+		numberOfProjectsInThisIncubator = numberOfProjectsInThisIncubator + 1;
 	}
 
 
-
 }
+
