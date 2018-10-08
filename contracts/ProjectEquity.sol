@@ -13,10 +13,11 @@ contract ProjectEquity is ProjectInterface, Ownable {
   using SafeMath for uint256;
   
   
-  constructor(uint _PercentEquityOfIncubatorOwner) public {
+  constructor(address _projectOwner, uint _incubatorOwnerPercentageInProject, uint _ventureFusionPercentageInProject) 
+  public {
 	 uint totalPercent = 100;
-	 shareBalances[msg.sender] = _PercentEquityOfIncubatorOwner;
-	 shareBalances[0x0] = totalPercent.sub(_PercentEquityOfIncubatorOwner);
+	 shareBalances[msg.sender] = _incubatorOwnerPercentageInProject;
+	 shareBalances[0x0] = totalPercent.sub(_incubatorOwnerPercentageInProject);
   }
 
   
