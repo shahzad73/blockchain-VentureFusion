@@ -1,4 +1,5 @@
 var Incubator = artifacts.require("./Incubator.sol");
+var projectEquity = artifacts.require("./ProjectEquity.sol");
 const truffleAssert = require('truffle-assertions');
 
 contract('Incubator', function(accounts) {
@@ -8,18 +9,17 @@ contract('Incubator', function(accounts) {
 
   });
 
-
-
+  
 
   it("Test constructor values", async () => {  
     
 	const meta = await Incubator.deployed();
 	
 	var percent = (await meta.incubatorOwnerPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 98, "Expected value 98 was not returned");
+	assert.equal(percent.valueOf(), 3000, "Expected value 98 was not returned");
 	
 	var percent = (await meta.ventureFusionPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 2, "Expected value 2 was not returned");
+	assert.equal(percent.valueOf(), 2000, "Expected value 2 was not returned");
 	
 	var percent = (await meta.transactionPriceInTokens.call()).toNumber();
 	assert.equal(percent.valueOf(), 10, "Expected value 10 was not returned");
@@ -37,21 +37,21 @@ contract('Incubator', function(accounts) {
 	
 	const meta = await Incubator.deployed();
 	
-	let tx = await meta.changeIncubatorOwnerProjectPercentage(97, {from : ventureFusionAccount});
+	let tx = await meta.changeIncubatorOwnerProjectPercentage(4000, {from : ventureFusionAccount});
     truffleAssert.eventEmitted(tx, 'changeIncubatorOwnerProjectPercentageEvent', (ev) => {
-		return ev.oldPercentage == 98 && ev.percentage == 97;
+		return ev.oldPercentage == 3000 && ev.percentage == 4000;
     });	
 	var percent = (await meta.incubatorOwnerPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 97, "Expected value 97 was not returned");
+	assert.equal(percent.valueOf(), 4000, "Expected value 4000 was not returned");
 	
-	tx = await meta.changeVentureFusionProjectPercentage(3, {from : ventureFusionAccount})
+	tx = await meta.changeVentureFusionProjectPercentage(3000, {from : ventureFusionAccount})
     truffleAssert.eventEmitted(tx, 'changeVentureFusionProjectPercentageEvent', (ev) => {
-		return ev.oldPercentage == 2 && ev.percentage == 3;
+		return ev.oldPercentage == 2000 && ev.percentage == 3000;
     });		
 	var percent = (await meta.ventureFusionPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 3, "Expected value 3 was not returned");
+	assert.equal(percent.valueOf(), 3000, "Expected value 3000 was not returned");
 	
-	tx = await meta.changeVETTokenForTransactions(20, {from : incubatorOwner1});
+	tx = await meta.changeVETTokenForTransactions(20, {from : ventureFusionAccount});
     truffleAssert.eventEmitted(tx, 'changeVETTokenForTransactionsEvent', (ev) => {
 		return ev.oldPrice == 10 && ev.price == 20;
     });	
@@ -73,24 +73,36 @@ contract('Incubator', function(accounts) {
 	 
  	 var meta = await Incubator.deployed();
 
-	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, {from : incubatorOwner1});
+	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, 1000, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 101" && ev.ProjectNo == 0;
      });
+	 var zz = await meta.incubatorProjects(0);	 
+	 var inc = await projectEquity.at(zz[1]);
 	 
-	 tx = await meta.addNewProject("Test Proj 102", projectOwner, {from : incubatorOwner1});
+	 var projectDecimals = await inc.decimals();
+	 assert.equal(projectDecimals.valueOf(), 1000, "1000 decimals should be returned");
+	 
+	 var incubatorOwnPercent = await inc.shareBalanceOf(incubatorOwner1);
+	 assert.equal(incubatorOwnPercent.valueOf(), 4000, "4000 decimals should be returned");
+
+	 var VFOwnPercent = await inc.shareBalanceOf(ventureFusionAccount);
+	 assert.equal(VFOwnPercent.valueOf(), 3000, "3000 decimals should be returned");
+
+	 var projectOwnPercent = await inc.shareBalanceOf(projectOwner);
+	 assert.equal(projectOwnPercent.valueOf(), 93000, "93000 decimals should be returned");
+	 
+	 
+	 tx = await meta.addNewProject("Test Proj 102", projectOwner, 1000, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 102" && ev.ProjectNo == 1;
-     });	 
-	 
-	 tx = await meta.addNewProject("Test Proj 103", projectOwner, {from : incubatorOwner1});
-     truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
-		return ev.projectName == "Test Proj 103" && ev.ProjectNo == 2;
      });
- 
+
+
 	 var counts = await meta.numberOfProjectsInThisIncubator();
-	 assert.equal(counts.valueOf(), 3, "3 Project should have been created");
+	 assert.equal(counts.valueOf(), 2, "2 Project should have been created");
 	 //console.log("Number of Project : " + counts);
+
 	 
   });
 
