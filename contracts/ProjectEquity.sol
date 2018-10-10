@@ -15,7 +15,9 @@ contract ProjectEquity is ProjectInterface, Ownable {
   uint public decimals;        
 
   using SafeMath for uint256;
-
+  
+  event TransferShares(address indexed from, address indexed to, uint256 value);
+  event ApprovalShares(address indexed from, address indexed to, uint256 value);
   
   constructor(    address _projectOwner, 
 				  address _incubatorOwnerAddres, 
@@ -30,6 +32,7 @@ contract ProjectEquity is ProjectInterface, Ownable {
 	 shareBalances[_projectOwner] = totalPercent.sub(_incubatorOwnerPercentageInProject + _ventureFusionPercentageInProject);
 	 decimals = _decimals;        
   }
+
 
   
 
@@ -46,15 +49,17 @@ contract ProjectEquity is ProjectInterface, Ownable {
 
     shareBalances[msg.sender] = shareBalances[msg.sender].sub(_value);
     shareBalances[_to] = shareBalances[_to].add(_value);
-    //emit TransferShares(msg.sender, _to, _value);
+    emit TransferShares(msg.sender, _to, _value);
     return true;
   }
 
 
 
-  
+    
 
-  
+
+
+
 
   function approveShares (
      address _spender, 
@@ -68,8 +73,7 @@ contract ProjectEquity is ProjectInterface, Ownable {
   }
 
   
-  
-  
+
   
     
 
@@ -102,7 +106,7 @@ contract ProjectEquity is ProjectInterface, Ownable {
     shareBalances[_from] = shareBalances[_from].sub(_value);
     shareBalances[_to] = shareBalances[_to].add(_value);
     shareAllowed[_from][msg.sender] = shareAllowed[_from][msg.sender].sub(_value);
-    //emit TransferShares(_from, _to, _value);
+    emit TransferShares(_from, _to, _value);
     return true;
   }
 

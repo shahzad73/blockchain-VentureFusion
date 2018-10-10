@@ -26,10 +26,10 @@ contract Incubator is Ownable {
 	}
 	mapping (uint => projectsStruct) public incubatorProjects;     //mapping of projects
 
-	
+
 	event ProjectCreatedEvent(string projectName, uint ProjectNo);
 	
-	
+
 	constructor( 
 	     uint _incubatorOwnerPercentageInProject, 
 		 uint _ventureFusionPercentageInProject,
