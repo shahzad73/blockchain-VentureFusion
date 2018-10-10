@@ -11,17 +11,19 @@ contract Incubator is Ownable {
 	address internal ventureFusionOwnerAddress;
 	
 	uint public transactionPriceInTokens;
+	uint public ProjectSingleShareDivision;
 
 	event changeIncubatorOwnerProjectPercentageEvent(uint oldPercentage, uint percentage);
 	event changeVentureFusionProjectPercentageEvent(uint oldPercentage, uint percentage);
 	event changeVETTokenForTransactionsEvent(uint oldPrice, uint price);
+	event changeProjectSingleShareDivisionEvent(uint oldSingleShareDivision, uint singleShareDivision);
 	
 	
 	uint public numberOfProjectsInThisIncubator = 0;   //current number of project in this incubator
 	struct projectsStruct {             //project structure
 		string projectName;
 		address projectContractAddress;
-		uint decimals;
+		uint ProjectSingleShareDivision;
 		address projectOwner;
 	}
 	mapping (uint => projectsStruct) public incubatorProjects;     //mapping of projects
@@ -34,13 +36,15 @@ contract Incubator is Ownable {
 	     uint _incubatorOwnerPercentageInProject, 
 		 uint _ventureFusionPercentageInProject,
 		 address _ventureFusionOwnerAddress,
-		 uint _transactionPriceInTokens ) 
+		 uint _transactionPriceInTokens,
+		 uint _singleShareDivision) 
     public 
     {
 		incubatorOwnerPercentageInProject = _incubatorOwnerPercentageInProject;
 		ventureFusionPercentageInProject = _ventureFusionPercentageInProject;
 		transactionPriceInTokens = _transactionPriceInTokens;
 		ventureFusionOwnerAddress = _ventureFusionOwnerAddress;
+		ProjectSingleShareDivision = _singleShareDivision;
 	}
 	
 	
@@ -84,19 +88,30 @@ contract Incubator is Ownable {
 	}
 
 
+	
+	//-------------------------------------------------
+	// This interface can be called by VentureFusion owner to set the decimal places in projects new projects 
+	// 
+	//-------------------------------------------------
+	function changeProjectSingleShareDivision(uint _singleShareDivision) public onlyVentureFusionOwner {
+		emit changeProjectSingleShareDivisionEvent(ProjectSingleShareDivision, _singleShareDivision);
+		ProjectSingleShareDivision = _singleShareDivision;
+	}
+	
+	
 
 
 	projectsStruct newProject;
 	//-------------------------------------------------
 	// Add new project.   This will create a new project within this incubator
 	//-------------------------------------------------
-	function addNewProject(string _projectName, address _projectOwner, uint _decimals) 
+	function addNewProject(string _projectName, address _projectOwner) 
 		public onlyOwner 
 		returns ( uint newProjectID, address projectAddress, string projectName )  
 	{
-		address newProjectContract = new ProjectEquity(_projectOwner, owner, incubatorOwnerPercentageInProject, ventureFusionOwnerAddress, ventureFusionPercentageInProject, _decimals);
+		address newProjectContract = new ProjectEquity(_projectOwner, owner, incubatorOwnerPercentageInProject, ventureFusionOwnerAddress, ventureFusionPercentageInProject, ProjectSingleShareDivision);
 		
-		newProject = projectsStruct(_projectName, newProjectContract, _decimals, _projectOwner);
+		newProject = projectsStruct(_projectName, newProjectContract, ProjectSingleShareDivision, _projectOwner);
 		incubatorProjects[numberOfProjectsInThisIncubator] = newProject;
 
 		//set return values 

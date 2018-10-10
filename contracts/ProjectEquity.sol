@@ -12,10 +12,10 @@ contract ProjectEquity is ProjectInterface, Ownable {
 
   //how many decimal places each single share has. for example 1000 
   //means each share can be broken down 1000. So 0.5 means 500
-  uint public decimals;        
+  uint public ProjectSingleShareDivision;        
 
   using SafeMath for uint256;
-  
+
   event TransferShares(address indexed from, address indexed to, uint256 value);
   event ApprovalShares(address indexed from, address indexed to, uint256 value);
   
@@ -24,17 +24,17 @@ contract ProjectEquity is ProjectInterface, Ownable {
 				  uint _incubatorOwnerPercentageInProject, 
 				  address _ventureFusionAddress, 
 				  uint _ventureFusionPercentageInProject, 
-				  uint _decimals )
+				  uint _ProjectSingleShareDivision )
   public {
-	 uint totalPercent = 100 * _decimals;
+	 uint totalShares = 100 * _ProjectSingleShareDivision;
 	 shareBalances[_incubatorOwnerAddres] = _incubatorOwnerPercentageInProject;
 	 shareBalances[_ventureFusionAddress] = _ventureFusionPercentageInProject;
-	 shareBalances[_projectOwner] = totalPercent.sub(_incubatorOwnerPercentageInProject + _ventureFusionPercentageInProject);
-	 decimals = _decimals;        
+	 shareBalances[_projectOwner] = totalShares.sub(_incubatorOwnerPercentageInProject + _ventureFusionPercentageInProject);
+	 ProjectSingleShareDivision = _ProjectSingleShareDivision;        
   }
 
 
-  
+
 
 
 

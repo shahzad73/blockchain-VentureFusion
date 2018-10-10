@@ -11,7 +11,7 @@ contract('Incubator', function(accounts) {
 
   
 
-  it("Set Incubator Defaults", async () => {  
+  it("Check Incubator Parameters", async () => {  
     
 	const meta = await Incubator.deployed();
 	
@@ -20,16 +20,16 @@ contract('Incubator', function(accounts) {
 	
 	var percent = (await meta.ventureFusionPercentageInProject.call()).toNumber();
 	assert.equal(percent.valueOf(), 2000, "Expected value 2000 was not returned");
-	
+
+	percent = (await meta.ProjectSingleShareDivision.call()).toNumber();
+	assert.equal(percent.valueOf(), 1000, "Expected value 1000 was not returned");
+		
 	var percent = (await meta.transactionPriceInTokens.call()).toNumber();
 	assert.equal(percent.valueOf(), 10, "Expected value 10 was not returned");
 	
   });
 
 
-
-  
-  
 
 
   it("Create new project and make transfers", async () => {  
@@ -40,15 +40,15 @@ contract('Incubator', function(accounts) {
 	 
  	 var meta = await Incubator.deployed();
 
-	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, 1000, {from : incubatorOwner1});
+	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 101" && ev.ProjectNo == 0;
      });
 	 var zz = await meta.incubatorProjects(0);	 
 	 var inc = await projectEquity.at(zz[1]);
 	 
-	 var projectDecimals = await inc.decimals();
-	 assert.equal(projectDecimals.valueOf(), 1000, "1000 decimals should be returned");
+	 var projectSingleShareDivision = await inc.ProjectSingleShareDivision();
+	 assert.equal(projectSingleShareDivision.valueOf(), 1000, "1000 decimals should be returned");
 	 
 	 var incubatorOwnPercent = await inc.shareBalanceOf(incubatorOwner1);
 	 assert.equal(incubatorOwnPercent.valueOf(), 3000, "3000 decimals should be returned");

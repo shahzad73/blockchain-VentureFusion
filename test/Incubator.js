@@ -16,14 +16,17 @@ contract('Incubator', function(accounts) {
 	const meta = await Incubator.deployed();
 	
 	var percent = (await meta.incubatorOwnerPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 3000, "Expected value 98 was not returned");
+	assert.equal(percent.valueOf(), 3000, "Expected value 3000 was not returned");
 	
-	var percent = (await meta.ventureFusionPercentageInProject.call()).toNumber();
-	assert.equal(percent.valueOf(), 2000, "Expected value 2 was not returned");
+	percent = (await meta.ventureFusionPercentageInProject.call()).toNumber();
+	assert.equal(percent.valueOf(), 2000, "Expected value 2000 was not returned");
 	
-	var percent = (await meta.transactionPriceInTokens.call()).toNumber();
+	percent = (await meta.ProjectSingleShareDivision.call()).toNumber();
+	assert.equal(percent.valueOf(), 1000, "Expected value 1000 was not returned");
+		
+	percent = (await meta.transactionPriceInTokens.call()).toNumber();
 	assert.equal(percent.valueOf(), 10, "Expected value 10 was not returned");
-	
+		
   });
 
 
@@ -58,10 +61,18 @@ contract('Incubator', function(accounts) {
 	var percent = (await meta.transactionPriceInTokens.call()).toNumber();
 	assert.equal(percent.valueOf(), 20, "Expected value 20 was not returned");
 	
+	tx = await meta.changeProjectSingleShareDivision(1001, {from : ventureFusionAccount});
+    truffleAssert.eventEmitted(tx, 'changeProjectSingleShareDivisionEvent', (ev) => {
+		return ev.oldSingleShareDivision == 1000 && ev.singleShareDivision == 1001;
+    });	
+	var percent = (await meta.ProjectSingleShareDivision.call()).toNumber();
+	assert.equal(percent.valueOf(), 1001, "Expected value 1001 was not returned");
+	//make it again 1000
+	tx = await meta.changeProjectSingleShareDivision(1000, {from : ventureFusionAccount});
   });
-  
-  
-  
+
+
+
   
 
 
@@ -73,14 +84,14 @@ contract('Incubator', function(accounts) {
 	 
  	 var meta = await Incubator.deployed();
 
-	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, 1000, {from : incubatorOwner1});
+	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 101" && ev.ProjectNo == 0;
      });
 	 var zz = await meta.incubatorProjects(0);	 
 	 var inc = await projectEquity.at(zz[1]);
 	 
-	 var projectDecimals = await inc.decimals();
+	 var projectDecimals = await inc.ProjectSingleShareDivision();
 	 assert.equal(projectDecimals.valueOf(), 1000, "1000 decimals should be returned");
 	 
 	 var incubatorOwnPercent = await inc.shareBalanceOf(incubatorOwner1);
@@ -93,7 +104,7 @@ contract('Incubator', function(accounts) {
 	 assert.equal(projectOwnPercent.valueOf(), 93000, "93000 decimals should be returned");
 	 
 	 
-	 tx = await meta.addNewProject("Test Proj 102", projectOwner, 1000, {from : incubatorOwner1});
+	 tx = await meta.addNewProject("Test Proj 102", projectOwner, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 102" && ev.ProjectNo == 1;
      });
