@@ -9,7 +9,7 @@ contract('Incubator', function(accounts) {
 
   });
 
-  
+
 
   it("Check Incubator Parameters", async () => {  
     

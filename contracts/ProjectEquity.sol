@@ -1,10 +1,12 @@
 pragma solidity ^0.4.24;
 
-import "./contracts/venturefusion/ProjectInterface.sol";
+
 import "./contracts/math/SafeMath.sol";
 import './contracts/ownership/Ownable.sol';
+import './ProjectTask.sol';
 
-contract ProjectEquity is ProjectInterface, Ownable {
+
+contract ProjectEquity is Ownable {
 
   mapping(address => uint256) internal shareBalances;
 
@@ -14,10 +16,17 @@ contract ProjectEquity is ProjectInterface, Ownable {
   //means each share can be broken down 1000. So 0.5 means 500
   uint public ProjectSingleShareDivision;        
 
+  uint public numberOfTotalTasksInArray = 0;
+  address[] public tasksAddresses;
+  
   using SafeMath for uint256;
 
   event TransferShares(address indexed from, address indexed to, uint256 value);
   event ApprovalShares(address indexed from, address indexed to, uint256 value);
+  
+  
+  
+  
   
   constructor(    address _projectOwner, 
 				  address _incubatorOwnerAddres, 
@@ -120,37 +129,33 @@ contract ProjectEquity is ProjectInterface, Ownable {
   function shareBalanceOf(
      address _shareHolder
   ) 
-    public view returns (uint256) 
+  public view returns (uint256) 
   {
-    return shareBalances[_shareHolder];
+     return shareBalances[_shareHolder];
   }
  
  
 
+
  
   
-  
-  function launchSellShares (
-	address _shareHolder, 
-	uint256 _value
-  ) 
-  public returns (bool)
-  {
-  
-  }
-  
-  
-  
-  
   function launchNewTask (
-    string _taskName, 
-	uint256 _percentageSharesOnOffer, 
-	address _contributor
-  ) 
+     string _taskTitle, 
+	 uint _contributorSharesOffered, 
+	 uint _evaluatorSharesOffered
+  ) onlyOwner
   public returns (bool)
   {
-    
+	 address projectTask = new ProjectTask(_taskTitle, 0x0, _contributorSharesOffered, 0x0, _evaluatorSharesOffered, address(this));
+	 tasksAddresses.push(projectTask);
+	 numberOfTotalTasksInArray = numberOfTotalTasksInArray + 1;
+	 
+		//transfer ownership to project owner
+		projectTask.call(bytes4(keccak256("transferOwnership(address)")), owner);	 
   }
+  
+  
+  
   
   
   

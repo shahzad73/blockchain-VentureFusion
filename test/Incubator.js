@@ -23,7 +23,7 @@ contract('Incubator', function(accounts) {
 	
 	percent = (await meta.ProjectSingleShareDivision.call()).toNumber();
 	assert.equal(percent.valueOf(), 1000, "Expected value 1000 was not returned");
-		
+
 	percent = (await meta.transactionPriceInTokens.call()).toNumber();
 	assert.equal(percent.valueOf(), 10, "Expected value 10 was not returned");
 		
