@@ -1,7 +1,7 @@
 pragma solidity ^0.4.24;
 
 import './contracts/ownership/Ownable.sol';
-
+import './ProjectEquity.sol';
 
 contract ProjectTask is Ownable {
 
@@ -10,13 +10,13 @@ contract ProjectTask is Ownable {
 
    address public contributorAddress;
    uint public contributorProjectShares;
-   bool isContributorSolutionSubmitted = false;
-   bool isContributorSolutionAcceptedAndSharesTransferred = false;
+   bool public isContributorSolutionSubmitted = false;
+   bool public isContributorSolutionAcceptedAndSharesTransferred = false;
 
    address public evaluatorAddress;
    uint public evaluatorProjectShares;
-   bool isEvaluatorSolutionSubmitted = false;
-   bool isEvaluatorSolutionAcceptedAndSharesTransferred = false;
+   bool public isEvaluatorSolutionSubmitted = false;
+   bool public isEvaluatorSolutionAcceptedAndSharesTransferred = false;
 
    uint tempNoteSendBy = 0;
    
@@ -27,7 +27,9 @@ contract ProjectTask is Ownable {
    }
    mapping (uint => taskNoteStruct) public taskNotes;     //mapping of task notes    
 
-   
+	
+   event ContributorTaskAccepted(address owner, address contributor, address taskAddress);
+	
    
    constructor(
 	  string _taskTitle,
@@ -100,7 +102,8 @@ contract ProjectTask is Ownable {
 		isContributorSolutionSubmitted = true;
 		addNotes(_notes, 2);
 	}
-	
+
+
 	function evaluatorDeliverablesAreReadyWithNotes(string _notes) onlyEvaluator public  {
 		require(bytes(_notes).length > 0);
 		isEvaluatorSolutionSubmitted = true;
@@ -114,14 +117,14 @@ contract ProjectTask is Ownable {
 	}
 
 	function rejectContibutorTaskSubmissionAndSetNotes(string _notes) onlyOwner public {
-		require(isContributorSolutionSubmitted = true);
+		require(isContributorSolutionSubmitted == true);
 		require(bytes(_notes).length > 0);
 		isContributorSolutionSubmitted = false;
 		addNotes(_notes, 1);	
 	}
 
 	function rejectEvaluatorTaskSubmissionAndSetNotes(string _notes) onlyOwner public {
-		require(isEvaluatorSolutionSubmitted = true);
+		require(isEvaluatorSolutionSubmitted == true);
 		require(bytes(_notes).length > 0);
 		isEvaluatorSolutionSubmitted = false;
 		addNotes(_notes, 1);	
@@ -130,15 +133,26 @@ contract ProjectTask is Ownable {
 
 
 	function markContributorTaskDoneAndTransferShare() onlyOwner public  {
-		require(isContributorSolutionSubmitted = true);
+		require(isContributorSolutionSubmitted == true);
+		require(isContributorSolutionAcceptedAndSharesTransferred == false);
+		
+		//transfer contributor tokens to him
+		//require(projectAddress.call(bytes4(keccak256("shareTransferFrom(address, address, uint)")), owner, contributorAddress, contributorProjectShares));
+		
+		ProjectEquity receiver = ProjectEquity(projectAddress);
+		receiver.shareTransferFrom(owner, contributorAddress, contributorProjectShares);		
+		
 		isContributorSolutionAcceptedAndSharesTransferred = true;
+		
+		emit ContributorTaskAccepted(owner, contributorAddress, address(this));
 	}
 	
 	function markEvaluatorTaskDoneAndTransferShare() onlyOwner public  {
 		require(isEvaluatorSolutionSubmitted = true);
+		require(isEvaluatorSolutionAcceptedAndSharesTransferred == false);
 		isEvaluatorSolutionAcceptedAndSharesTransferred = true;
 	}
 
 
-	
+
 }

@@ -111,7 +111,7 @@ contract ProjectEquity is Ownable {
     require(_value <= shareBalances[_from]);
     require(_value <= shareAllowed[_from][msg.sender]);
     require(_to != address(0));
-
+	
     shareBalances[_from] = shareBalances[_from].sub(_value);
     shareBalances[_to] = shareBalances[_to].add(_value);
     shareAllowed[_from][msg.sender] = shareAllowed[_from][msg.sender].sub(_value);
@@ -133,12 +133,12 @@ contract ProjectEquity is Ownable {
   {
      return shareBalances[_shareHolder];
   }
- 
- 
 
 
- 
-  
+
+
+
+
   function launchNewTask (
      string _taskTitle, 
 	 uint _contributorSharesOffered, 
@@ -149,14 +149,18 @@ contract ProjectEquity is Ownable {
 	 address projectTask = new ProjectTask(_taskTitle, 0x0, _contributorSharesOffered, 0x0, _evaluatorSharesOffered, address(this));
 	 tasksAddresses.push(projectTask);
 	 numberOfTotalTasksInArray = numberOfTotalTasksInArray + 1;
+	 	  
+	 //transfer ownership to project owner
+	 require(projectTask.call(bytes4(keccak256("transferOwnership(address)")), owner));
 	 
-		//transfer ownership to project owner
-		projectTask.call(bytes4(keccak256("transferOwnership(address)")), owner);	 
+	 //now give access to certain number tokens to the new task contract so that it can make 
+	 //transfers for contributors and evaluator
+	 shareAllowed[owner][projectTask] = _contributorSharesOffered + _evaluatorSharesOffered;
   }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 }
