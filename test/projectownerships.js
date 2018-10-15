@@ -42,7 +42,7 @@ contract('Incubator', function(accounts) {
 
 	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, {from : incubatorOwner1});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
-		return ev.projectName == "Test Proj 101" && ev.ProjectNo == 0;
+		return ev.projectName == "Test Proj 101" && ev.ProjectID == 0;
      });
 	 var zz = await meta.incubatorProjects(0);	 
 	 var inc = await projectEquity.at(zz[1]);
