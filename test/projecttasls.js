@@ -23,7 +23,7 @@ contract('Incubator', function(accounts) {
 	 
  	 var meta = await Incubator.deployed();
 
-	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, {from : incubatorOwner1});
+	 let tx = await meta.addNewProject("Test Proj 101", projectOwner, incubatorOwner1, 3000, ventureFusionAccount, 2000, 3, {from : ventureFusionAccount});
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 101" && ev.ProjectID == 0;
      });
@@ -57,7 +57,7 @@ contract('Incubator', function(accounts) {
 	 var task = await projectTask.at(taskAddress);
 	 
 	 //check that this Task has access to 100+20 tokens to transferon on behalf of the 
-	 tmpNumber = await project.shareAllowance(projectOwner, taskAddress);
+	 tmpNumber = await project.allowance(projectOwner, taskAddress);
 	 assert.equal(tmpNumber.valueOf(), 120, "Expected value 100 was not returned");
 
 	 
@@ -146,7 +146,7 @@ contract('Incubator', function(accounts) {
 
 
 	 //check that contributor balanace is 0 before accepting his task and tasnferring token 
-	 var share1 = await project.shareBalanceOf(contributor);
+	 var share1 = await project.balanceOf(contributor);
 	 assert.equal(share1.valueOf(), 0, "0 decimals should be returned"); 	 
 
 
@@ -170,12 +170,12 @@ contract('Incubator', function(accounts) {
 	 assert.equal(tmpNumber.valueOf(), true, "Expected value true was not returned");
 	 
 	 //check that tokens are transferred to contributor 
-	 var share1 = await project.shareBalanceOf(contributor);
+	 var share1 = await project.balanceOf(contributor);
 	 assert.equal(share1.valueOf(), 100, "100 decimals should be returned . . "); 	 
 	 
 	 
 	 //Check that this Task has now access to only 20 tokens to transfer on behalf of owner 
-	 tmpNumber = await project.shareAllowance(projectOwner, taskAddress);
+	 tmpNumber = await project.allowance(projectOwner, taskAddress);
 	 assert.equal(tmpNumber.valueOf(), 20, "Expected value 100 was not returned");
 	 
 	 
@@ -210,7 +210,7 @@ contract('Incubator', function(accounts) {
 
 
 	 //check that evaluator balanace is 0 before accepting his task and tasnferring token 
-	 var share1 = await project.shareBalanceOf(evaluator);
+	 var share1 = await project.balanceOf(evaluator);
 	 assert.equal(share1.valueOf(), 0, "0 decimals should be returned"); 	 
 
 
@@ -234,12 +234,12 @@ contract('Incubator', function(accounts) {
 	 assert.equal(tmpNumber.valueOf(), true, "Expected value true was not returned");
 
 	 //check that tokens are transferred to evaluator 
-	 var share1 = await project.shareBalanceOf(evaluator);
+	 var share1 = await project.balanceOf(evaluator);
 	 assert.equal(share1.valueOf(), 20, "20 decimals should be returned . . "); 	 
 	 
 
 	 //Check that this Task has now access to only 20 tokens to transfer on behalf of owner 
-	 tmpNumber = await project.shareAllowance(projectOwner, taskAddress);
+	 tmpNumber = await project.allowance(projectOwner, taskAddress);
 	 assert.equal(tmpNumber.valueOf(), 0, "Expected value 0 was not returned");
 	 
 	 

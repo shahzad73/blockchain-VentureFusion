@@ -11,7 +11,7 @@ contract VETToken_Crowdsale is MintedCrowdsale, Ownable {
             address _wallet,
             MintableToken _token
     )
-    public 
+    public
 	Crowdsale(_rate, _wallet, _token)    //call the constructor of the parent
 	{ 
 	

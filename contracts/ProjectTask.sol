@@ -218,10 +218,10 @@ contract ProjectTask is Ownable {
 
 	
 	
-
+	
    //--------------------------------------------------------------------
    // Owner can finalized the contributor's submissions. 
-   // This will call the projectt to transfer equity to contributor 
+   // This will call the project contractt to transfer equity to contributor 
    //--------------------------------------------------------------------
 	function markContributorTaskDoneAndTransferShare() onlyOwner public  {
 		require(isContributorSolutionSubmitted == true);
@@ -229,7 +229,7 @@ contract ProjectTask is Ownable {
 				
 	    // call the project contract and transfer share/equity to contributor
 		ProjectEquity receiver = ProjectEquity(projectAddress);
-		require(receiver.shareTransferFrom(owner, contributorAddress, contributorProjectShares));		
+		require(receiver.transferFrom(owner, contributorAddress, contributorProjectShares));		
 		
 		//Set variable that contributor submission is accepted and shares are transferred
 		isContributorSolutionAcceptedAndSharesTransferred = true;
@@ -251,7 +251,7 @@ contract ProjectTask is Ownable {
 		
 		// call the project contract and  transfer share/equity to evaluator 
 		ProjectEquity receiver = ProjectEquity(projectAddress);
-		require(receiver.shareTransferFrom(owner, evaluatorAddress, evaluatorProjectShares));
+		require(receiver.transferFrom(owner, evaluatorAddress, evaluatorProjectShares));
 		
 		//Set variable that evaluator submission is accepted and shares are transferred
 		isEvaluatorSolutionAcceptedAndSharesTransferred = true;
