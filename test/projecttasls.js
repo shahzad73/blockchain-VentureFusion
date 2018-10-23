@@ -43,7 +43,7 @@ contract('Incubator', function(accounts) {
 	 
 	 const meta = await Incubator.deployed();
 
-	 var projectAddress = await meta.incubatorProjects(0);	 
+	 var projectAddress = await meta.getProject(0);	 
 	 var project = await projectEquity.at(projectAddress[1]);
 	 
 	 

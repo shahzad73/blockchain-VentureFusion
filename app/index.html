@@ -1,0 +1,85 @@
+<html>
+ <head>
+    <title>List of projects</title>
+		
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/web3.js"></script>	
+
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">	
+	
+<script language="javascript">
+
+	$(document).ready(function(){
+		
+		$.get( "/build/contracts/Incubator.json", function( data ) {
+			alert(data);
+		});		
+		
+		
+	});
+
+</script>
+</head>
+
+
+
+
+<div class="container">
+  <h2>Project List</h2>
+  <p>List of projects in this incubator</p>    
+  <br>
+  <a href="createproject.html" class="btn btn-primary pull-right">New Project</a>  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+		<th>VF / Shares</th>
+        <th>Incubator Owner / Shares</th>
+        <th>Project Owner / Shares</th>
+		<th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+		<td>john@example.com</td>
+		<td><a href="projectdetails.html" class="btn btn-primary pull-right">Open Project</a>  </td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+		<td>john@example.com</td>
+		<td><a href="projectdetails.html" class="btn btn-primary pull-right">Open Project</a>  </td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+		<td>john@example.com</td>
+		<td><a href="projectdetails.html" class="btn btn-primary pull-right">Open Project</a>  </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+<body>
+
+
+
+</body>
+
+</html>
+
+
+
+

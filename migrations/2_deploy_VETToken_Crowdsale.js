@@ -1,5 +1,5 @@
-var VentureFusion_VET = artifacts.require("VentureFusion_VET");
-var VentureFusionVET_Crowdsale = artifacts.require("VentureFusionVET_Crowdsale");
+var VentureFusion_VET = artifacts.require("VETToken");
+var VentureFusionVET_Crowdsale = artifacts.require("VETToken_Crowdsale");
 
 
 module.exports = function(deployer, network, accounts) {

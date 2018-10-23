@@ -24,7 +24,7 @@ contract('Incubator', function(accounts) {
      truffleAssert.eventEmitted(tx, 'ProjectCreatedEvent', (ev) => {
 		return ev.projectName == "Test Proj 101" && ev.ProjectID == 0;
      });
-	 var zz = await meta.incubatorProjects(0);	 
+	 var zz = await meta.getProject(0);	 
 	 var inc = await projectEquity.at(zz[1]);
 	 
 	 var decimals = await inc.decimals();
@@ -57,12 +57,12 @@ contract('Incubator', function(accounts) {
  	var meta = await Incubator.deployed();  
   
 	//check there is one project
-	var counts = await meta.numberOfProjectsInThisIncubator();
+	var counts = await meta.getProjectCount();
 	assert.equal(counts.valueOf(), 1, "1 Project should have been created");
 	
 	 	
 	//transfer some shares from project owner to share holder 1
-	 var zz = await meta.incubatorProjects(0);	 //get the first project contract 
+	 var zz = await meta.getProject(0);	 //get the first project contract 
 	 var project = await projectEquity.at(zz[1]);
 	 
 	 
@@ -112,7 +112,7 @@ contract('Incubator', function(accounts) {
  	var meta = await Incubator.deployed();  
   
 	//transfer some shares from project owner to share holder 1
-	var zz = await meta.incubatorProjects(0);	 //get the first project contract 
+	var zz = await meta.getProject(0);	 //get the first project contract 
 	var project = await projectEquity.at(zz[1]);	
 	
 	//First check that share holder 1 has 0 shares from project owner that he can spend 

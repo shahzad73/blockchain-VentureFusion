@@ -47,9 +47,7 @@ contract ProjectTask is Ownable {
    }
    mapping (uint => taskNoteStruct) public taskNotes;     //mapping of task notes
 
-   
-   
-   
+      
    event ContributorTaskAccepted(address owner, address contributor, uint shares);
    event EvaluatorTaskAccepted(address owner, address evaluator, uint shares);
    
@@ -113,7 +111,6 @@ contract ProjectTask is Ownable {
    
 
 
-
    //----------------------------------------------------------------------------------------------
    // Owner can set contributor's address.   Only set contrinutor can send notes or deliverables 
    //----------------------------------------------------------------------------------------------   
@@ -123,6 +120,37 @@ contract ProjectTask is Ownable {
 	   require(isContributorSolutionAcceptedAndSharesTransferred == false);		
 	   contributorAddress = _address;
    }
+	
+	
+    
+	function getContributorInformation() view public returns(
+	   address addressContributor,
+	   uint projectShares,
+	   bool isSolutionSubmitted,
+	   bool isSolutionAcceptedAndSharesTransferred
+	) {
+		   addressContributor = contributorAddress;
+		   projectShares = contributorProjectShares;
+		   isSolutionSubmitted = isContributorSolutionSubmitted;
+		   isSolutionAcceptedAndSharesTransferred = isContributorSolutionAcceptedAndSharesTransferred;
+	}
+
+
+
+	
+	function getEvaluatorInformation() view public returns(
+	   address addressEvaluator,
+	   uint ProjectShares,
+	   bool isSolutionSubmitted,
+	   bool isSolutionAcceptedAndSharesTransferred
+	) {
+	    addressEvaluator = evaluatorAddress;
+	    ProjectShares = evaluatorProjectShares;
+	    isSolutionSubmitted = isEvaluatorSolutionSubmitted;
+	    isSolutionAcceptedAndSharesTransferred = isEvaluatorSolutionAcceptedAndSharesTransferred;
+	}
+
+
 	
 	
 	
@@ -250,8 +278,8 @@ contract ProjectTask is Ownable {
 		require(isEvaluatorSolutionAcceptedAndSharesTransferred == false);
 		
 		// call the project contract and  transfer share/equity to evaluator 
-		ProjectEquity receiver = ProjectEquity(projectAddress);
-		require(receiver.transferFrom(owner, evaluatorAddress, evaluatorProjectShares));
+		//ProjectEquity receiver = ProjectEquity(projectAddress);
+		//require(receiver.transferFrom(owner, evaluatorAddress, evaluatorProjectShares));
 		
 		//Set variable that evaluator submission is accepted and shares are transferred
 		isEvaluatorSolutionAcceptedAndSharesTransferred = true;
